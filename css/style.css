@@ -82,6 +82,18 @@ body {
     background: #94A3B8;
 }
 
+/* --- Checkbox invisível que controla o toggle do menu mobile (sem JS) --- */
+.sidebar-checkbox {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
 /* --- Sidebar --- */
 .sidebar {
     background-color: var(--color-sidebar-bg);
@@ -464,16 +476,19 @@ body {
         transform: translateX(-100%);
     }
 
-    .sidebar.open {
+    /* Checkbox hack: quando #sidebar-toggle está marcado, abre a sidebar e overlay */
+    .sidebar-checkbox:checked ~ .sidebar {
         transform: translateX(0);
     }
 
-    .sidebar-overlay.active {
+    .sidebar-checkbox:checked ~ .sidebar-overlay {
         display: block;
     }
 
     .hamburger {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .main-content {

@@ -40,10 +40,14 @@
 
     <!-- ============================================
          SIDEBAR - Menu Lateral
+         (Toggle via checkbox hack - 100% CSS, sem JavaScript)
          ============================================ -->
 
-    <!-- Overlay Mobile -->
-    <div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <!-- Checkbox invisível que controla a abertura/fechamento do menu mobile -->
+    <input type="checkbox" id="sidebar-toggle" class="sidebar-checkbox" aria-label="Alternar menu lateral">
+
+    <!-- Overlay Mobile (label clicável - fecha o menu) -->
+    <label for="sidebar-toggle" id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></label>
 
     <aside id="sidebar" class="sidebar fixed top-0 left-0 h-screen w-60 flex flex-col justify-between py-6 lg:translate-x-0">
 
@@ -130,12 +134,12 @@
         <!-- Header -->
         <header class="flex items-center justify-between px-6 md:px-8 py-5 bg-white border-b border-gray-100">
             <div class="flex items-center gap-4">
-                <!-- Hamburger Menu (Mobile) -->
-                <button id="hamburger-btn" class="hamburger lg:hidden" onclick="toggleSidebar()" aria-label="Abrir menu">
+                <!-- Hamburger Menu (Mobile) - label que aciona o checkbox-toggle -->
+                <label for="sidebar-toggle" id="hamburger-btn" class="hamburger lg:hidden" aria-label="Abrir menu">
                     <span></span>
                     <span></span>
                     <span></span>
-                </button>
+                </label>
                 <div>
                     <h2 class="text-xl md:text-2xl font-bold text-gray-900">Minhas Metas Financeiras 🎯</h2>
                     <p class="text-sm text-gray-500 mt-0.5">Acompanhe e conquiste seus objetivos um passo de cada vez</p>
@@ -415,32 +419,6 @@
         </footer>
 
     </main>
-
-    <!-- ============================================
-         JAVASCRIPT (mínimo - apenas para menu mobile)
-         ============================================ -->
-    <script>
-        // Toggle Sidebar Mobile
-        function toggleSidebar() {
-            var sidebar = document.getElementById('sidebar');
-            var overlay = document.getElementById('sidebar-overlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('active');
-        }
-
-        // Filter Tabs - interatividade visual
-        var filterTabs = document.querySelectorAll('.filter-tab');
-        filterTabs.forEach(function(tab) {
-            tab.addEventListener('click', function() {
-                filterTabs.forEach(function(t) {
-                    t.classList.remove('active');
-                    t.setAttribute('aria-selected', 'false');
-                });
-                tab.classList.add('active');
-                tab.setAttribute('aria-selected', 'true');
-            });
-        });
-    </script>
 
 </body>
 </html>
