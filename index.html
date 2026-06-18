@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fintech - Sistema de Controle Financeiro Simplificado. Acompanhe suas metas financeiras e conquiste seus objetivos.">
+    <title>Fintech | Minhas Metas Financeiras</title>
+
+    <!-- Tailwind CSS via CDN (Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00D47E',
+                        'primary-dark': '#00B86B',
+                        'sidebar-bg': '#1A1F2E',
+                        'sidebar-hover': '#252B3B',
+                        'bg-main': '#F5F7FA',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS Personalizado (separado do HTML - boa prática FIAP) -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="font-inter bg-bg-main min-h-screen">
+
+    <!-- ============================================
+         SIDEBAR - Menu Lateral
+         ============================================ -->
+
+    <!-- Overlay Mobile -->
+    <div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-screen w-60 flex flex-col justify-between py-6 lg:translate-x-0">
+
+        <!-- Logo -->
+        <div>
+            <div class="sidebar-logo flex items-center gap-3 px-6 mb-10">
+                <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">$</span>
+                </div>
+                <h1 class="text-white font-bold text-xl tracking-tight">Fintech</h1>
+            </div>
+
+            <!-- Navegação -->
+            <nav class="flex flex-col gap-1 px-3">
+                <a href="#" id="nav-visao-geral" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 text-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                    </svg>
+                    <span>Visão Geral</span>
+                </a>
+
+                <a href="#" id="nav-receitas-despesas" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 text-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Receitas e Despesas</span>
+                </a>
+
+                <a href="#" id="nav-investimentos" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 text-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                    <span>Investimentos</span>
+                </a>
+
+                <a href="#" id="nav-metas" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-lg text-white text-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                    <span>Metas</span>
+                </a>
+
+                <a href="#" id="nav-relatorios" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 text-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <span>Relatórios</span>
+                </a>
+
+                <a href="#" id="nav-configuracoes" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 text-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    <span>Configurações</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Usuário no Rodapé da Sidebar -->
+        <div class="px-4 mt-6">
+            <div class="flex items-center gap-3 px-3 py-3 rounded-xl bg-sidebar-hover">
+                <div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
+                    JS
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-white text-sm font-semibold truncate">João Silva</p>
+                    <p class="text-gray-500 text-xs truncate">joao@email.com</p>
+                </div>
+                <button id="btn-logout" class="text-gray-500 hover:text-gray-300 transition-colors" title="Sair">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ============================================
+         CONTEÚDO PRINCIPAL
+         ============================================ -->
+    <main class="main-content lg:ml-60 min-h-screen">
+
+        <!-- Header -->
+        <header class="flex items-center justify-between px-6 md:px-8 py-5 bg-white border-b border-gray-100">
+            <div class="flex items-center gap-4">
+                <!-- Hamburger Menu (Mobile) -->
+                <button id="hamburger-btn" class="hamburger lg:hidden" onclick="toggleSidebar()" aria-label="Abrir menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-900">Minhas Metas Financeiras 🎯</h2>
+                    <p class="text-sm text-gray-500 mt-0.5">Acompanhe e conquiste seus objetivos um passo de cada vez</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 md:gap-5">
+                <!-- Notificação -->
+                <button id="btn-notification" class="notification-badge text-gray-500 hover:text-gray-700 transition-colors p-2" title="Notificações">
+                    <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                    </svg>
+                    <span class="badge-dot">3</span>
+                </button>
+
+                <!-- Botão Nova Meta -->
+                <button id="btn-nova-meta" class="btn-nova-meta hidden sm:inline-flex">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Nova Meta
+                </button>
+
+                <!-- Avatar -->
+                <div id="user-avatar" class="avatar bg-primary text-white" title="João Silva">
+                    JS
+                </div>
+            </div>
+        </header>
+
+        <!-- Conteúdo da Página -->
+        <div class="px-4 md:px-8 py-6 md:py-8">
+
+            <!-- ============================================
+                 BANNER DE RESUMO
+                 ============================================ -->
+            <section id="summary-section" class="summary-banner p-5 md:p-8 mb-8 animate-fade-in" aria-label="Resumo das metas">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                    <!-- Total Acumulado -->
+                    <div class="summary-item">
+                        <p class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">Total Acumulado</p>
+                        <p class="text-white text-xl md:text-2xl font-bold">
+                            R$ 61.700
+                            <span class="text-primary text-sm md:text-base font-semibold">/ R$ 348.000</span>
+                        </p>
+                        <div class="progress-bar-container mt-3 h-2">
+                            <div class="progress-bar-fill progress-green" style="width: 17.7%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Metas Ativas -->
+                    <div class="summary-item">
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2">Metas Ativas</p>
+                        <p class="text-white text-3xl md:text-4xl font-bold">6</p>
+                        <p class="text-gray-500 text-sm mt-1">Em andamento</p>
+                    </div>
+
+                    <!-- Concluídas -->
+                    <div class="summary-item">
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2">Concluídas</p>
+                        <p class="text-white text-3xl md:text-4xl font-bold">2</p>
+                        <p class="text-gray-500 text-sm mt-1">Este ano</p>
+                    </div>
+
+                    <!-- Aporte Mensal -->
+                    <div class="summary-item">
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2">Aporte Mensal</p>
+                        <p class="text-white text-2xl md:text-3xl font-bold">R$ 2.150</p>
+                        <p class="text-gray-500 text-sm mt-1">Distribuído</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================
+                 FILTROS + TÍTULO DA SEÇÃO
+                 ============================================ -->
+            <section class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <h3 class="text-lg md:text-xl font-bold text-gray-900">Suas Metas</h3>
+                <div id="filter-tabs" class="flex flex-wrap gap-2" role="tablist">
+                    <button class="filter-tab active" role="tab" aria-selected="true">Todas</button>
+                    <button class="filter-tab" role="tab" aria-selected="false">Curto prazo</button>
+                    <button class="filter-tab" role="tab" aria-selected="false">Longo prazo</button>
+                    <button class="filter-tab" role="tab" aria-selected="false">Próximas do prazo</button>
+                </div>
+            </section>
+
+            <!-- ============================================
+                 GRID DE METAS (6 Cards)
+                 ============================================ -->
+            <section id="metas-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-6" aria-label="Lista de metas financeiras">
+
+                <!-- Card 1: Reserva de Emergência -->
+                <article class="meta-card status-on-track p-5 md:p-6 animate-fade-in" aria-label="Meta: Reserva de Emergência">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="meta-icon bg-emerald-50 text-emerald-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <span class="badge badge-success">No Prazo</span>
+                    </div>
+                    <h4 class="text-base font-bold text-gray-900 mb-1">Reserva de Emergência</h4>
+                    <p class="text-sm text-gray-500 mb-4">Segurança financeira</p>
+                    <div class="flex items-baseline justify-between mb-2">
+                        <span class="text-lg font-bold text-gray-900">R$ 12.000</span>
+                        <span class="text-sm text-gray-400">de R$ 15.000</span>
+                    </div>
+                    <div class="progress-bar-container mb-4">
+                        <div class="progress-bar-fill progress-green" style="width: 80%"></div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-gray-900">80%</span>
+                        <div class="text-right">
+                            <p class="text-xs text-gray-400 uppercase font-semibold tracking-wide">Prazo</p>
+                            <p class="text-sm font-semibold text-gray-700">Dez/2026</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2: Casamento -->
+                <article class="meta-card status-on-track p-5 md:p-6 animate-fade-in" aria-label="Meta: Casamento">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="meta-icon bg-pink-50 text-pink-500">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                        </div>
+                        <span class="badge badge-success">No Prazo</span>
+                    </div>
+                    <h4 class="text-base font-bold text-gray-900 mb-1">Casamento</h4>
+                    <p class="text-sm text-gray-500 mb-4">Sonho de vida</p>
+                    <div class="flex items-baseline justify-between mb-2">
+                        <span class="text-lg font-bold text-gray-900">R$ 22.000</span>
+                        <span class="text-sm text-gray-400">de R$ 30.000</span>
+                    </div>
+                    <div class="progress-bar-container mb-4">
+                        <div class="progress-bar-fill progress-orange" style="width: 73%"></div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-gray-900">73%</span>
+                        <div class="text-right">
+                            <p class="text-xs text-gray-400 uppercase font-semibold tracking-wide">Prazo</p>
+                            <p class="text-sm font-semibold text-gray-700">Set/2026</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3: Viagem Europa -->
+                <article class="meta-card status-attention p-5 md:p-6 animate-fade-in" aria-label="Meta: Viagem Europa">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="meta-icon bg-red-50 text-red-500">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <span class="badge badge-warning">Atenção</span>
+                    </div>
+                    <h4 class="text-base font-bold text-gray-900 mb-1">Viagem Europa</h4>
+                    <p class="text-sm text-gray-500 mb-4">Lazer e experiências</p>
+                    <div class="flex items-baseline justify-between mb-2">
+                        <span class="text-lg font-bold text-gray-900">R$ 8.500</span>
+                        <span class="text-sm text-gray-400">de R$ 25.000</span>
+                    </div>
+                    <div class="progress-bar-container mb-4">
+                        <div class="progress-bar-fill progress-red" style="width: 34%"></div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-gray-900">34%</span>
+                        <div class="text-right">
+                            <p class="text-xs text-gray-400 uppercase font-semibold tracking-wide">Prazo</p>
+                            <p class="text-sm font-semibold text-gray-700">Jul/2027</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 4: Imóvel Próprio -->
+                <article class="meta-card status-on-track p-5 md:p-6 animate-fade-in" aria-label="Meta: Imóvel Próprio">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="meta-icon bg-blue-50 text-blue-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            </svg>
+                        </div>
+                        <span class="badge badge-success">No Prazo</span>
+                    </div>
+                    <h4 class="text-base font-bold text-gray-900 mb-1">Imóvel Próprio</h4>
+                    <p class="text-sm text-gray-500 mb-4">Patrimônio</p>
+                    <div class="flex items-baseline justify-between mb-2">
+                        <span class="text-lg font-bold text-gray-900">R$ 50.000</span>
+                        <span class="text-sm text-gray-400">de R$ 200.000</span>
+                    </div>
+                    <div class="progress-bar-container mb-4">
+                        <div class="progress-bar-fill progress-blue" style="width: 25%"></div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-gray-900">25%</span>
+                        <div class="text-right">
+                            <p class="text-xs text-gray-400 uppercase font-semibold tracking-wide">Prazo</p>
+                            <p class="text-sm font-semibold text-gray-700">Dez/2030</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 5: Carro Novo -->
+                <article class="meta-card status-attention p-5 md:p-6 animate-fade-in" aria-label="Meta: Carro Novo">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="meta-icon bg-amber-50 text-amber-500">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                            </svg>
+                        </div>
+                        <span class="badge badge-warning">Atenção</span>
+                    </div>
+                    <h4 class="text-base font-bold text-gray-900 mb-1">Carro Novo</h4>
+                    <p class="text-sm text-gray-500 mb-4">Mobilidade</p>
+                    <div class="flex items-baseline justify-between mb-2">
+                        <span class="text-lg font-bold text-gray-900">R$ 15.000</span>
+                        <span class="text-sm text-gray-400">de R$ 60.000</span>
+                    </div>
+                    <div class="progress-bar-container mb-4">
+                        <div class="progress-bar-fill progress-yellow" style="width: 25%"></div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-gray-900">25%</span>
+                        <div class="text-right">
+                            <p class="text-xs text-gray-400 uppercase font-semibold tracking-wide">Prazo</p>
+                            <p class="text-sm font-semibold text-gray-700">Mar/2028</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 6: MBA / Pós-graduação -->
+                <article class="meta-card status-late p-5 md:p-6 animate-fade-in" aria-label="Meta: MBA / Pós-graduação">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="meta-icon bg-purple-50 text-purple-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+                                <path d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
+                            </svg>
+                        </div>
+                        <span class="badge badge-danger">Atrasada</span>
+                    </div>
+                    <h4 class="text-base font-bold text-gray-900 mb-1">MBA / Pós-graduação</h4>
+                    <p class="text-sm text-gray-500 mb-4">Educação</p>
+                    <div class="flex items-baseline justify-between mb-2">
+                        <span class="text-lg font-bold text-gray-900">R$ 4.200</span>
+                        <span class="text-sm text-gray-400">de R$ 18.000</span>
+                    </div>
+                    <div class="progress-bar-container mb-4">
+                        <div class="progress-bar-fill progress-purple" style="width: 23%"></div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-gray-900">23%</span>
+                        <div class="text-right">
+                            <p class="text-xs text-gray-400 uppercase font-semibold tracking-wide">Prazo</p>
+                            <p class="text-sm font-semibold text-red-500 font-bold">Fev/2026</p>
+                        </div>
+                    </div>
+                </article>
+
+            </section>
+
+            <!-- Botão Nova Meta (Mobile - fixo no rodapé) -->
+            <div class="sm:hidden fixed bottom-6 right-6 z-30">
+                <button id="btn-nova-meta-mobile" class="btn-nova-meta shadow-lg rounded-full w-14 h-14 flex items-center justify-center p-0" title="Nova Meta">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path d="M12 4v16m8-8H4"/>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="px-6 md:px-8 py-4 text-center text-xs text-gray-400 border-t border-gray-100">
+            <p>&copy; 2026 Fintech — Sistema de Controle Financeiro Simplificado | FIAP</p>
+        </footer>
+
+    </main>
+
+    <!-- ============================================
+         JAVASCRIPT (mínimo - apenas para menu mobile)
+         ============================================ -->
+    <script>
+        // Toggle Sidebar Mobile
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        // Filter Tabs - interatividade visual
+        var filterTabs = document.querySelectorAll('.filter-tab');
+        filterTabs.forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                filterTabs.forEach(function(t) {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
+                tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
+            });
+        });
+    </script>
+
+</body>
+</html>
